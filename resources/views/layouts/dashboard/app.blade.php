@@ -241,14 +241,14 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Alexander Pierce</span>
+                                <span class="hidden-xs">{{auth()->user()->full_name}}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
                                     <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                     <p>
-                                        Alexander Pierce - Web Developer
+                                        {{auth()->user()->full_name}} - Web Developer
                                         <small>Member since Nov. 2012</small>
                                     </p>
                                 </li>
@@ -270,7 +270,14 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
                                     </div>
                                 </li>
                             </ul>
@@ -299,8 +306,11 @@
 
             <!-- Main content -->
             <section class="content">
+
                 @yield('content')
+
                 @include('partials._session')
+
             </section><!-- /.content -->
         </div><!-- /.content-wrapper -->
         <footer class="main-footer">
@@ -504,6 +514,42 @@
 
     <!-- AdminLTE App -->
     <script src="{{ asset('dashboard_files/js/app.min.js') }}"></script>
+    <script>
+        $('.delete').click(function(e){
+            var that = $(this)
+            e.preventDefault();
+            var n = new Noty({
+                text:"@lang('site.confirm_delete')",
+                type:"alert",
+                killer:true,
+                layout: 'topRight',
+                buttons:[
+                    Noty.button("@lang('site.yes')",'btn btn-danger mr-2',function(){
+                        that.closest('form').submit();
+                    }),
+                    Noty.button("@lang('site.no')",'btn btn-primary mr-2',function(){
+                        n.close();
+                    }),
+                ]
+            }).show()
+        });
+
+
+
+
+
+        $(".image").change(function() {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('.image-preview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+            }
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>

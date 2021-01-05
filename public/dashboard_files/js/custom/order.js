@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    
+
     //add product btn
     $('.add-product-btn').on('click', function (e) {
 
@@ -14,7 +14,7 @@ $(document).ready(function () {
             `<tr>
                 <td>${name}</td>
                 <td><input type="number" name="products[${id}][quantity]" data-price="${price}" class="form-control input-sm product-quantity" min="1" value="1"></td>
-                <td class="product-price">${price}</td>               
+                <td class="product-price">${price}</td>
                 <td><button class="btn btn-danger btn-sm remove-product-btn" data-id="${id}"><span class="fa fa-trash"></span></button></td>
             </tr>`;
 
@@ -56,13 +56,13 @@ $(document).ready(function () {
 
     });//end of product quantity change
 
-    //list all order products
-    $('.order-products').on('click', function(e) {
+    //list all order products_images
+    $('.order-products_images').on('click', function(e) {
 
         e.preventDefault();
 
         $('#loading').css('display', 'flex');
-        
+
         var url = $(this).data('url');
         var method = $(this).data('method');
         $.ajax({
@@ -77,7 +77,7 @@ $(document).ready(function () {
             }
         })
 
-    });//end of order products click
+    });//end of order products_images click
 
     //print order
     $(document).on('click', '.print-btn', function() {
@@ -94,7 +94,7 @@ function calculateTotal() {
     var price = 0;
 
     $('.order-list .product-price').each(function(index) {
-        
+
         price += parseFloat($(this).html().replace(/,/g, ''));
 
     });//end of product price

@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name','last_name', 'email', 'password',
+        'first_name','last_name', 'email', 'password','image'
     ];
 
     /**
@@ -40,4 +40,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = ['image_path'];
+
+    public function getFullNameAttribute()
+    {
+        return ucfirst($this->first_name) .' '. ucfirst($this->last_name);
+    }
+    public function getImagePathAttribute()
+    {
+        return asset('uploads/users_images/'.$this->image);
+    }
+
+
 }
