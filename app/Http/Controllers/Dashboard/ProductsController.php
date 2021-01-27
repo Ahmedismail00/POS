@@ -18,12 +18,16 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
-        $records = Product::when($request->search ,function ($q) use( $request){
-            return $q->whereTranslationLike('name','%'.$request->search.'%');
-        })->when($request->category_id,function ($q) use ($request){
-            return $q->where('category_id',$request->category_id);
-        })->latest()->paginate(2);
-        $categories = Category::all();
+//        if ($request->category_id || $request->search)
+//        {
+//            Product::whereTranslationLike('name','%'.$request->search.'%')->orWhere('category_id',$request->category_id)->paginate(10);
+//        }
+        $records = Product::with('category')->when($request->search ,function ($q) use( $request){
+        return $q->whereTranslationLike('name','%'.$request->search.'%');
+            })->when($request->category_id,function ($q) use ($request){
+        return $q->where('category_id',$request->category_id);
+        })->paginate(10);
+        $categories = Category::with('products')->paginate(10);
         return view('dashboard.products.index',compact('records'),compact('categories'));
     }
 

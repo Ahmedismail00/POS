@@ -43,9 +43,9 @@
                     </tr>
                     @foreach($records as $record)
                     <tr>
-                        <td>{{$loop->iteration}}</td>
+                        <td>{{$record->id}}</td>
                         <td>{{$record->translate(app()->getLocale())->name}}</td>
-                        <td>{{$record->products->count()}}</td>
+{{--                        <td>{{$record->products->count()}}</td>--}}
                         <td><a href="{{route('dashboard.products.index',['category_id' => $record->id])}}" class="btn btn-sm btn-info">@lang('site.related_products')</a></td>
                         <td>
                             @if(auth()->user()->hasPermission('update_categories'))

@@ -168,6 +168,7 @@ return [
          */
         astrotomic\Translatable\TranslatableServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
